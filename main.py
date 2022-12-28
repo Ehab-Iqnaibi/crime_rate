@@ -1,10 +1,11 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.colors
 import numpy as np
 
 crime_data = pd.read_csv("crime_rate_spain.csv")
 cities = crime_data["Location"].drop_duplicates()
-print(cities)
+#print(cities)
 years = crime_data['Year'].drop_duplicates()
 #print(years)
 crimes = crime_data["Crime"].drop_duplicates()
@@ -27,8 +28,33 @@ def pie_chart():
     print(list(cities))
     user = str(input('Enter name of the city: '))
     labels =list(crimes)
-    total_Crime = crime_data[crime_data['Location'] == crimes[user]].groupby("Crime").sum()['Total cases']
+    year_label = [2019, 2020, 2021] * 14
+    crim_sp=crime_data[crime_data['Location'] == user]
+    #total_Crime = crim_sp.groupby("Crime").sum()['Total cases']
+    Crime_2019 = crim_sp[crim_sp['Year'] == 2019].groupby("Crime").sum()['Total cases']
+    Crime_2020 = crim_sp[crim_sp['Year'] == 2020].groupby("Crime").sum()['Total cases']
+    Crime_2021 = crim_sp[crim_sp['Year'] == 2021].groupby("Crime").sum()['Total cases']
 
+    Crime_array=np.array([list(Crime_2019),list(Crime_2020),list(Crime_2021)]).T
+    Crime_count=Crime_array.sum(axis=1)
+    print(Crime_count)
+    flattened_Crime_count = Crime_array.flatten()
+    print(flattened_Crime_count)
+
+    fig, ax = plt.subplots()
+
+    size = 0.3
+    ax.pie(Crime_count, radius=1, labels=labels, wedgeprops=dict(width=size,edgecolor='white'))
+    ax.pie(flattened_Crime_count, radius=1 - size, wedgeprops=dict(width=size, edgecolor='white'))
+    ax.set_title('Distribution of different crimes in'+user)
+    plt.show()
+
+def test():
+    student_count = np.array([[280, 170], [250, 270], [210, 290], [130, 150], [145, 165], [500, 350]])
+    print(student_count)
+    aggregated_student_count = student_count.sum(axis=1)
+    print(aggregated_student_count)
+    print(student_count.sum(axis=0))
 
 
 
@@ -43,6 +69,8 @@ while(True):
         trend_crime()
     elif num ==2:
         pie_chart()
+    elif num == 3:
+        test()
 
 
     user_input = input('Do you want to choose another option (y/n): ')

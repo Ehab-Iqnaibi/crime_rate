@@ -41,12 +41,14 @@ def pie_chart():
     flattened_Crime_count = Crime_array.flatten()
     print(flattened_Crime_count)
 
-    fig, ax = plt.subplots()
+    #fig, ax = plt.subplots()
+    fig,(ax1, ax2) = plt.subplots(1, 2)
 
-    size = 0.3
-    ax.pie(Crime_count, radius=1, labels=labels, wedgeprops=dict(width=size,edgecolor='white'))
-    ax.pie(flattened_Crime_count, radius=1 - size, wedgeprops=dict(width=size, edgecolor='white'))
-    ax.set_title('Distribution of different crimes in'+user)
+    size = 0.4
+    ax1.pie(Crime_count, radius=1, labels=labels, wedgeprops=dict(width=size,edgecolor='white'))
+    ax1.set_title('Distribution of different crimes in '+user)
+    ax2.pie(flattened_Crime_count, radius=1-size ,labels=year_label, wedgeprops=dict(width=size, edgecolor='white'))
+    ax2.set_title('Distribution of different crimes in '+user+' during the years')
     plt.show()
 
 def test():

@@ -54,37 +54,32 @@ def pie_chart():
     plt.show()
 
 def bar_chart():
+    crimes_df = crimes.iloc[0:14]
     print('\n')
-    print(list(cities))
-    cities_input = input("Enter cities separated by a comma (at lest 5): ")
-    cities_bar = cities_input.split(",")
-    print(cities_bar)
-    print('\n')
-    #print(crimes)
+    print(crimes_df)
     crimes_bar = []
     for i in range(3):
-        crime_bar = input("Enter a 3 crimes "+str(i+1)+': ')
+        crime_bar = input("Enter a three crimes\ crim "+str(i+1)+': ')
         crimes_bar.append(crime_bar)
 
-    C1_bar = []
-    C2_bar = []
-    C3_bar = []
-    labels_bar=cities_bar
-    for city in cities_bar:
-        crim_sp_bar = crime_data[crime_data['Location'] == city]
-        Crime1 = crim_sp_bar[crim_sp_bar['Crime'] == crimes_bar[0]].groupby("year").sum()['Total cases']
-        Crime2 = crim_sp_bar[crim_sp_bar['Crime'] == crimes_bar[1]].groupby("year").sum()['Total cases']
-        Crime3 = crim_sp_bar[crim_sp_bar['Crime'] == crimes_bar[2]].groupby("year").sum()['Total cases']
-        C1_bar.append(Crime1)
-        C2_bar.append(Crime2)
-        C3_bar.append(Crime3)
-    
+    Crime1 = crime_data[crime_data['Crime'] == crimes_bar[0]].groupby('Location').sum()['Total cases']
+    Crime2 = crime_data[crime_data['Crime'] == crimes_bar[1]].groupby('Location').sum()['Total cases']
+    Crime3 = crime_data[crime_data['Crime'] == crimes_bar[2]].groupby('Location').sum()['Total cases']
 
-
-
-
-
-
+    labels_bar = list(cities)
+    x = np.arange(len(labels_bar))
+    width = 0.25
+    fig, ax = plt.subplots()
+    ax.bar(x - width, Crime1, width, label=crimes_bar[0], color="red")
+    ax.bar(x, Crime2, width, label=crimes_bar[1], color="yellow")
+    ax.bar(x + width, Crime3, width, label=crimes_bar[2], color="blue")
+    ax.set_ylabel('Total cases')
+    ax.set_title('A bar chart showing a comparison of the 3 crimes in the cities')
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels_bar, rotation='vertical')
+    ax.legend()
+    fig.tight_layout()
+    plt.show()
 
 
 

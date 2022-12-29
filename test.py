@@ -5,6 +5,10 @@ student_count = np.array( [[280, 170], [250, 270], [210, 290], [130, 150], [145,
 aggregated_student_count = student_count.sum(axis=1)
 print(aggregated_student_count)
 
+  print('\n')
+    print(list(cities))
+    cities_input = input("Enter cities separated by a comma (at lest 5): ")
+    cities_bar = cities_input.split(",")
 '''
 #Series
 Locations = crime_data["Location"]

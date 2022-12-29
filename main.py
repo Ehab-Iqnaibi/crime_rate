@@ -41,22 +41,50 @@ def pie_chart():
     flattened_Crime_count = Crime_array.flatten()
     print(flattened_Crime_count)
 
-    #fig, ax = plt.subplots()
-    fig,(ax1, ax2) = plt.subplots(1, 2)
-
+    fig, ax = plt.subplots()
+    #fig,(ax1, ax2) = plt.subplots(1, 2)
     size = 0.4
-    ax1.pie(Crime_count, radius=1, labels=labels, wedgeprops=dict(width=size,edgecolor='white'))
-    ax1.set_title('Distribution of different crimes in '+user)
-    ax2.pie(flattened_Crime_count, radius=1-size ,labels=year_label, wedgeprops=dict(width=size, edgecolor='white'))
-    ax2.set_title('Distribution of different crimes in '+user+' during the years')
+    ax.pie(Crime_count, radius=1, wedgeprops=dict(width=size,edgecolor='white'))
+    #Distribution of different crimes in city
+    ax.set_title('Distribution of different crimes in '+user)
+    ax.legend(labels, bbox_to_anchor=(1, 0.5))
+    #Distribution of different crimes in the city during the years
+    ax.pie(flattened_Crime_count, radius=1-size , wedgeprops=dict(width=size, edgecolor='white'))
+    #ax2.set_title('Distribution of different crimes in '+user+' during the years')
     plt.show()
 
-def test():
-    student_count = np.array([[280, 170], [250, 270], [210, 290], [130, 150], [145, 165], [500, 350]])
-    print(student_count)
-    aggregated_student_count = student_count.sum(axis=1)
-    print(aggregated_student_count)
-    print(student_count.sum(axis=0))
+def bar_chart():
+    print('\n')
+    print(list(cities))
+    cities_input = input("Enter cities separated by a comma (at lest 5): ")
+    cities_bar = cities_input.split(",")
+    print(cities_bar)
+    print('\n')
+    #print(crimes)
+    crimes_bar = []
+    for i in range(3):
+        crime_bar = input("Enter a 3 crimes "+str(i+1)+': ')
+        crimes_bar.append(crime_bar)
+
+    C1_bar = []
+    C2_bar = []
+    C3_bar = []
+    labels_bar=cities_bar
+    for city in cities_bar:
+        crim_sp_bar = crime_data[crime_data['Location'] == city]
+        Crime1 = crim_sp_bar[crim_sp_bar['Crime'] == crimes_bar[0]].groupby("year").sum()['Total cases']
+        Crime2 = crim_sp_bar[crim_sp_bar['Crime'] == crimes_bar[1]].groupby("year").sum()['Total cases']
+        Crime3 = crim_sp_bar[crim_sp_bar['Crime'] == crimes_bar[2]].groupby("year").sum()['Total cases']
+        C1_bar.append(Crime1)
+        C2_bar.append(Crime2)
+        C3_bar.append(Crime3)
+    
+
+
+
+
+
+
 
 
 
@@ -65,15 +93,13 @@ while(True):
                       1.The trend of a crime over time.
                       2.A pie chart showing the distribution of different crimes in a specific city.
                       3.A bar chart showing a comparison of the number of some crimes in a few cities.
-                      Enter the number of the plot  1,2,3: '''))
-
+                      Enter the number of the plot  1,2,or 3: '''))
     if num ==1:
         trend_crime()
     elif num ==2:
         pie_chart()
     elif num == 3:
-        test()
-
+        bar_chart()
 
     user_input = input('Do you want to choose another option (y/n): ')
     if user_input.lower() == 'y':

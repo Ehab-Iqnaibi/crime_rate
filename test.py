@@ -53,4 +53,9 @@ for city in city_df:
     outer_colors = cmap(oc_idx)
     inner_colors = cmap(ic_idx)
 
+student_count = np.array([[280, 170], [250, 270], [210, 290], [130, 150], [145, 165], [500, 350]])
+    print(student_count)
+    aggregated_student_count = student_count.sum(axis=1)
+    print(aggregated_student_count)
+    print(student_count.sum(axis=0))
 '''
